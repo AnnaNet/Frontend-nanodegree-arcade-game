@@ -44,3 +44,10 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+let allEnemies = [];
+const enemy = new Enemy;
+
+allEnemies.push(enemy);
+
+const player = new Enemy;
