@@ -40,15 +40,34 @@ Player.prototype.update = function(dt) {
 };
 
 Player.prototype.handleInput = function(code) {
-    switch(code) {
-      case 'left' : if (this.x >= 50) {this.x = this.x - 100};
-        break;
-      case 'up' : if (this.y >= 50) {this.y = this.y - 83};
-        break;
-      case 'right' : if (this.x <= 350) {this.x = this.x + 100};
-        break;
-      case 'down' : if (this.y <= 350) {this.y = this.y + 83};
-        break;
+  switch(code) {
+    case 'left' :
+      if (this.x >= 50) {
+        this.x = this.x - 100;
+      };
+      break;
+
+    case 'up' :
+      if (this.y >= 62) {
+        this.y = this.y - 83;
+
+      } else if (this.y = 61) {
+        this.y = 310;
+        this.x = 202;
+      };
+      break;
+
+    case 'right' :
+      if (this.x <= 350) {
+        this.x = this.x + 100;
+      };
+      break;
+
+    case 'down' :
+      if (this.y <= 350) {
+        this.y = this.y + 83;
+      };
+      break;
   }
 };
 
