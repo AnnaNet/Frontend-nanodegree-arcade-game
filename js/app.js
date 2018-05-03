@@ -26,9 +26,17 @@ Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-class Player extends Enemy {};
+class Player extends Enemy {
+  constructor(sprite, x, y) {
+    super(sprite, x, y);
+    this.sprite = 'images/char-boy.png';
+    this.x = 200;
+    this.y = 400;
+  };
+};
+Player.prototype.update = function(dt) {
 
-
+};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -57,14 +65,9 @@ document.addEventListener('keyup', function(e) {
 let allEnemies = [];
 
 const player = new Player;
-player.sprite = 'images/char-boy.png';
-player.x = 3;
-player.y = 50;
-
-//player.update;
 
 function createEnemies() {
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 3; i++) {
     const enemy = new Enemy;
     enemy.y = 50 * i + 150;
     switch(i) {
