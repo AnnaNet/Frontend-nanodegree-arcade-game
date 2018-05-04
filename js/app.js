@@ -1,3 +1,8 @@
+let wins = 0;
+
+$("body").append(`<div style="font-size:2.5em; margin-top:1em;"><span class="win">${wins}</span> <span style="color:#c70000">W</span><span style="color:#0e0ea2">I</span>N<span style="color:#128e0b">S</span></div>`);
+
+
 // Enemies our player must avoid
 var Enemy = function() {
   // Variables applied to each of our instances go here,
@@ -77,6 +82,9 @@ Player.prototype.handleInput = function(code) {
 
         if (this.y === -22) {
           setTimeout(() => this.begin(), 500);
+          wins = wins + 1;
+          console.log (`wins = ${wins}`);
+          $(".win").text(`${wins}`);
         };
       };
       break;
@@ -93,7 +101,6 @@ Player.prototype.handleInput = function(code) {
       };
       break;
   }
-  //  check();
 };
 
 
