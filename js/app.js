@@ -6,19 +6,25 @@ var Enemy = function() {
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
   this.sprite = 'images/enemy-bug.png';
-  this.x = -20;
-  this.y = 65;
+  this.x = -100;
+  this.y = 100;
 
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    this.x = this.x + 2;
+  this.x = this.x + 2;
 
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
+  if (this.x >= 550) {
+    this.x = -50;
+    this.y = (Math.floor(Math.random() * 7) + 2) * 30;
+  };
+
+
 };
 
 // Draw the enemy on the screen, required method for game
@@ -35,8 +41,21 @@ class Player extends Enemy {
   };
 };
 
-Player.prototype.update = function(dt) {
+Player.prototype.update = function() {
+  allEnemies.forEach(function(item, i, allEnemies) {
+    const xMax = item.x + 70;
+    const xMin = item.x - 70;
+    const yMax = item.y + 50;
+    const yMin = item.y - 50;
 
+    if ((player.x <= xMax && player.x >= xMin) && (player.y <= yMax && player.y >= yMin)) {
+      console.log ("Wrong!");
+      setTimeout (function() {
+        player.x = 202;
+        player.y = 310;
+      }, 100)
+    }
+  });
 };
 
 Player.prototype.handleInput = function(code) {
@@ -69,6 +88,11 @@ Player.prototype.handleInput = function(code) {
       };
       break;
   }
+  //  check();
+};
+
+
+Enemy.prototype.changeX = function() {
 };
 
 // Now write your own player class
@@ -100,18 +124,24 @@ let allEnemies = [];
 const player = new Player;
 
 function createEnemies() {
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i <= 4; i++) {
+
     const enemy = new Enemy;
-    enemy.y = 50 * i + 150;
+    enemy.y = (Math.floor(Math.random() * 6) + 1) * 20;
+
     switch(i) {
-      case 0 : enemy.x = -50;
+      case 0 : enemy.x = -150;
         break;
       case 1 : enemy.x = 20;
         break;
-    }
+      case 2 : enemy.x = -200;
+        break;
+      case 3 : enemy.x = -400;
+        break;
+    };
+
     allEnemies.push(enemy);
   }
 };
 
-createEnemies();
-
+createEnemies()
