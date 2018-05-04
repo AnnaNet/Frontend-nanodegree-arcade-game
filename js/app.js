@@ -49,7 +49,6 @@ Player.prototype.update = function() {
     const yMin = item.y - 50;
 
     if ((player.x <= xMax && player.x >= xMin) && (player.y <= yMax && player.y >= yMin)) {
-      console.log ("Wrong!");
       setTimeout (function() {
         player.x = 202;
         player.y = 310;
@@ -57,6 +56,12 @@ Player.prototype.update = function() {
     }
   });
 };
+
+Player.prototype.begin = function() {
+  this.y = 310;
+  this.x = 202;
+
+}
 
 Player.prototype.handleInput = function(code) {
   switch(code) {
@@ -67,12 +72,12 @@ Player.prototype.handleInput = function(code) {
       break;
 
     case 'up' :
-      if (this.y >= 62) {
+      if (this.y >= 0) {
         this.y = this.y - 83;
 
-      } else if (this.y = 61) {
-        this.y = 310;
-        this.x = 202;
+        if (this.y === -22) {
+          setTimeout(() => this.begin(), 500);
+        };
       };
       break;
 
@@ -91,9 +96,6 @@ Player.prototype.handleInput = function(code) {
   //  check();
 };
 
-
-Enemy.prototype.changeX = function() {
-};
 
 // Now write your own player class
 // This class requires an update(), render() and
