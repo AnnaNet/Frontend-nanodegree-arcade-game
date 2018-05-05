@@ -1,17 +1,66 @@
-let wins = 0;
 
-$("body").append(`<div style="font-size:2.5em; margin-top:1em;">
-  <span class="win" style="color:#b5ff0f">${wins}</span>
-  <span style="color:#c70000">W</span>
-  <span style="color:#0e0ea2">I</span>
-  <span style="color:#1ac19d">N</span>
-  <span style="color:#128e0b">S</span>
+let wins = 0;
+let allEnemies = [];
+let heroClick = false;
+
+
+$("body").append(`<div style="font-size: 2.5em; margin-top: 1em;">
+  <span class="win" style="color: #b5ff0f">${wins}</span>
+  <span style="color: #c70000">W</span>
+  <span style="color: #0e0ea2">I</span>
+  <span style="color: #1ac19d">N</span>
+  <span style="color: #128e0b">S</span>
   </div>`);
 
-$("body").append(`<div style="color:lightgray">*press "n" for restart game</div>`);
+$("body").append(`<div style="color:lightgray">*for changing Hero press picture of Hero<br>*press "n" for restart game</div>`);
 
 $("body").css('background-image', 'url(images/fon.jpg)');
 $("body").css('background-size', 'cover');
+
+
+function newHero() {
+  wins = 0;
+  $(".win").text(`${wins}`);
+};
+
+function heroes() {
+
+  $("body").append(`<div class="hero" style="margin-bottom: -4em">
+  <img src="images/char-boy.png" alt="picture">
+  <img src="images/char-cat-girl.png" alt="picture">
+  <img src="images/char-horn-girl.png" alt="picture">
+  <img src="images/char-pink-girl.png" alt="picture">
+  <img src="images/char-princess-girl.png" alt="picture">
+  <div>`);
+
+  $('img:eq(0)').click(function() {
+    player.sprite = "images/char-boy.png";
+    newHero();
+  });
+
+  $('img:eq(1)').click(function() {
+    player.sprite =  "images/char-cat-girl.png";
+    newHero();
+  });
+
+  $('img:eq(2)').click(function() {
+    player.sprite = "images/char-horn-girl.png";
+    newHero();
+  });
+
+  $('img:eq(3)').click(function() {
+    player.sprite = "images/char-pink-girl.png";
+    newHero();
+  });
+
+  $('img:eq(4)').click(function() {
+    player.sprite = "images/char-princess-girl.png";
+    newHero();
+  });
+
+  return ("images/char-boy.png");
+};
+
 
 function soundWin() {
   let sound = new Audio();
@@ -61,7 +110,8 @@ Enemy.prototype.render = function() {
 class Player extends Enemy {
   constructor(sprite, x, y) {
     super(sprite, x, y);
-    this.sprite = 'images/char-boy.png';
+
+    this.sprite = heroes();
     this.x = 202;
     this.y = 310;
   };
@@ -82,6 +132,7 @@ Player.prototype.update = function() {
       }, 100)
     }
   });
+
 };
 
 Player.prototype.begin = function() {
@@ -105,7 +156,7 @@ Player.prototype.handleInput = function(code) {
           soundWin();
           setTimeout(() => this.begin(), 500);
           wins = wins + 1;
-          console.log (`wins = ${wins}`);
+         // console.log (`wins = ${wins}`);
           $(".win").text(`${wins}`);
         };
       };
@@ -124,7 +175,6 @@ Player.prototype.handleInput = function(code) {
       break;
   }
 };
-
 
 
 // Now write your own player class
@@ -151,9 +201,9 @@ document.addEventListener('keyup', function(e) {
   player.handleInput(allowedKeys[e.keyCode]);
 });
 
-let allEnemies = [];
 
 const player = new Player;
+
 
 function createEnemies() {
   for (let i = 0; i <= 4; i++) {
