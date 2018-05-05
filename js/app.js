@@ -1,6 +1,29 @@
 let wins = 0;
 
-$("body").append(`<div style="font-size:2.5em; margin-top:1em;"><span class="win">${wins}</span> <span style="color:#c70000">W</span><span style="color:#0e0ea2">I</span>N<span style="color:#128e0b">S</span></div>`);
+$("body").append(`<div style="font-size:2.5em; margin-top:1em;">
+  <span class="win" style="color:#b5ff0f">${wins}</span>
+  <span style="color:#c70000">W</span>
+  <span style="color:#0e0ea2">I</span>
+  <span style="color:#1ac19d">N</span>
+  <span style="color:#128e0b">S</span>
+  </div>`);
+
+$("body").append(`<div style="color:lightgray">*press "n" for restart game</div>`);
+
+$("body").css('background-image', 'url(images/fon.jpg)');
+$("body").css('background-size', 'cover');
+
+function soundWin() {
+  let sound = new Audio();
+  sound.src = 'sounds/wins.wav';
+  sound.autoplay = true;
+};
+
+function soundBump() {
+  let sound = new Audio();
+  sound.src = 'sounds/bump.wav';
+  sound.autoplay = true;
+};
 
 
 // Enemies our player must avoid
@@ -28,8 +51,6 @@ Enemy.prototype.update = function(dt) {
     this.x = -50;
     this.y = (Math.floor(Math.random() * 7) + 2) * 30;
   };
-
-
 };
 
 // Draw the enemy on the screen, required method for game
@@ -48,13 +69,14 @@ class Player extends Enemy {
 
 Player.prototype.update = function() {
   allEnemies.forEach(function(item, i, allEnemies) {
-    const xMax = item.x + 70;
-    const xMin = item.x - 70;
-    const yMax = item.y + 50;
-    const yMin = item.y - 50;
+    const xMax = item.x + 60;
+    const xMin = item.x - 60;
+    const yMax = item.y + 40;
+    const yMin = item.y - 40;
 
     if ((player.x <= xMax && player.x >= xMin) && (player.y <= yMax && player.y >= yMin)) {
       setTimeout (function() {
+        soundBump();
         player.x = 202;
         player.y = 310;
       }, 100)
@@ -65,7 +87,6 @@ Player.prototype.update = function() {
 Player.prototype.begin = function() {
   this.y = 310;
   this.x = 202;
-
 }
 
 Player.prototype.handleInput = function(code) {
@@ -81,6 +102,7 @@ Player.prototype.handleInput = function(code) {
         this.y = this.y - 83;
 
         if (this.y === -22) {
+          soundWin();
           setTimeout(() => this.begin(), 500);
           wins = wins + 1;
           console.log (`wins = ${wins}`);
@@ -102,6 +124,7 @@ Player.prototype.handleInput = function(code) {
       break;
   }
 };
+
 
 
 // Now write your own player class
@@ -153,4 +176,11 @@ function createEnemies() {
   }
 };
 
-createEnemies()
+createEnemies();
+
+/*TODO: when press 'n', restart game*/
+$('html').keydown(function(eventObject) {
+  if (event.keyCode === 78) {
+    location.reload();
+  };
+});
