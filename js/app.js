@@ -1,9 +1,10 @@
-
+/*TODO: add variables and arrays*/
 let wins = 0;
 let allEnemies = [];
 let heroClick = false;
 
 
+/*TODO: Add counter of wins, instructions and background*/
 $("body").append(`<div style="font-size: 2.5em; margin-top: 1em;">
   <span class="win" style="color: #b5ff0f">${wins}</span>
   <span style="color: #c70000">W</span>
@@ -18,11 +19,14 @@ $("body").css('background-image', 'url(images/fon.jpg)');
 $("body").css('background-size', 'cover');
 
 
+/*@description If change hero, then reseted counter of wins*/
 function newHero() {
   wins = 0;
   $(".win").text(`${wins}`);
 };
 
+
+/*@description Add pictures of heroes in DOM and listeners on click on pictures*/
 function heroes() {
 
   $("body").append(`<div class="hero" style="margin-bottom: -4em">
@@ -62,12 +66,15 @@ function heroes() {
 };
 
 
+/*@description create sound for win*/
 function soundWin() {
   let sound = new Audio();
   sound.src = 'sounds/wins.wav';
   sound.autoplay = true;
 };
 
+
+/*@description create sound for collision*/
 function soundBump() {
   let sound = new Audio();
   sound.src = 'sounds/bump.wav';
@@ -75,38 +82,32 @@ function soundBump() {
 };
 
 
-// Enemies our player must avoid
+/*@description create class Enemy*/
 var Enemy = function() {
-  // Variables applied to each of our instances go here,
-  // we've provided one for you to get started
-
-  // The image/sprite for our enemies, this uses
-  // a helper we've provided to easily load images
   this.sprite = 'images/enemy-bug.png';
   this.x = -100;
   this.y = 100;
-
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+
+/*@description update the enemy's position, required method for game*/
+/*@param dt, a time delta between ticks*/
 Enemy.prototype.update = function(dt) {
   this.x = this.x + 2;
-
-  // You should multiply any movement by the dt parameter
-  // which will ensure the game runs at the same speed for
-  // all computers.
   if (this.x >= 550) {
     this.x = -50;
     this.y = (Math.floor(Math.random() * 7) + 2) * 30;
   };
 };
 
-// Draw the enemy on the screen, required method for game
+
+/*@description draw the enemy on the screen, required method for game*/
 Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+
+/*@description create class Player*/
 class Player extends Enemy {
   constructor(sprite, x, y) {
     super(sprite, x, y);
@@ -117,6 +118,8 @@ class Player extends Enemy {
   };
 };
 
+
+/*@description check at collision and update the player's position*/
 Player.prototype.update = function() {
   allEnemies.forEach(function(item, i, allEnemies) {
     const xMax = item.x + 60;
@@ -132,14 +135,17 @@ Player.prototype.update = function() {
       }, 100)
     }
   });
-
 };
 
+
+/*@description is returning player on beginning position*/
 Player.prototype.begin = function() {
   this.y = 310;
   this.x = 202;
 }
 
+
+/*@description update the player's position*/
 Player.prototype.handleInput = function(code) {
   switch(code) {
     case 'left' :
@@ -177,19 +183,7 @@ Player.prototype.handleInput = function(code) {
 };
 
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
-
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+/*@description listens for key presses and sends the keys to your*/
 document.addEventListener('keyup', function(e) {
   var allowedKeys = {
     37: 'left',
@@ -202,12 +196,9 @@ document.addEventListener('keyup', function(e) {
 });
 
 
-const player = new Player;
-
-
+/*@description create array of objects Enemy*/
 function createEnemies() {
   for (let i = 0; i <= 4; i++) {
-
     const enemy = new Enemy;
     enemy.y = (Math.floor(Math.random() * 6) + 1) * 20;
 
@@ -226,7 +217,14 @@ function createEnemies() {
   }
 };
 
+
+/*TODO: create array of objects Enemy*/
 createEnemies();
+
+
+/*TODO: create object of class Player*/
+const player = new Player;
+
 
 /*TODO: when press 'n', restart game*/
 $('html').keydown(function(eventObject) {
