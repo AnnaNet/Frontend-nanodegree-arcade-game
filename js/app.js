@@ -94,7 +94,7 @@ let Enemy = function() {
 /*@description update the enemy's position, required method for game*/
 /*@param dt, a time delta between ticks*/
 Enemy.prototype.update = function(dt) {
-  this.x = this.x + 2;
+  this.x = this.x + 100 * dt;
   if (this.x >= 550) {
     this.x = -50;
     this.y = (Math.floor(Math.random() * 7) + 2) * 30;
@@ -115,7 +115,7 @@ class Player extends Enemy {
 
     this.sprite = heroes();
     this.x = 202;
-    this.y = 310;
+    this.y = 320;
   };
 };
 
@@ -123,16 +123,16 @@ class Player extends Enemy {
 /*@description check at collision and update the player's position*/
 Player.prototype.update = function() {
   allEnemies.forEach(function(item, i, allEnemies) {
-    const xMax = item.x + 60;
-    const xMin = item.x - 60;
-    const yMax = item.y + 40;
-    const yMin = item.y - 40;
+    const xMax = item.x + 70;
+    const xMin = item.x - 71;
+    const yMax = item.y + 75;
+    const yMin = item.y - 65;
 
     if ((player.x <= xMax && player.x >= xMin) && (player.y <= yMax && player.y >= yMin)) {
       setTimeout (function() {
         soundBump();
         player.x = 202;
-        player.y = 310;
+        player.y = 320;
       }, 100);
     };
   });
@@ -141,7 +141,7 @@ Player.prototype.update = function() {
 
 /*@description is returning player on beginning position*/
 Player.prototype.begin = function() {
-  this.y = 310;
+  this.y = 320;
   this.x = 202;
 };
 
@@ -159,7 +159,7 @@ Player.prototype.handleInput = function(code) {
       if (this.y >= 0) {
         this.y = this.y - 83;
 
-        if (this.y === -22) {
+        if (this.y <= -10) {
           soundWin();
           setTimeout(() => this.begin(), 500);
           wins = wins + 1;
