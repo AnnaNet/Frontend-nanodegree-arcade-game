@@ -3,18 +3,6 @@ let wins = 0;
 let allEnemies = [];
 
 
-/*TODO: Add counter of wins, instructions and background*/
-$('body').append(`<div style="font-size: 2.5em; margin-top: 1em;">
-  <span class="win" style="color: #b5ff0f">${wins}</span>
-  <span style="color: #c70000">W</span>
-  <span style="color: #0e0ea2">I</span>
-  <span style="color: #1ac19d">N</span>
-  <span style="color: #128e0b">S</span>
-  </div>`
-);
-
-$('body').append(`<div style="color:lightgray">*for changing Hero click picture of Hero<br>*press "n" for restart game</div>`);
-
 $('body').css('background-image', 'url(images/fon.jpg)');
 $('body').css('background-size', 'cover');
 
@@ -26,17 +14,9 @@ function newHero() {
 };
 
 
-/*@description Add pictures of heroes in DOM and listeners on click on pictures*/
+/*@description add listeners on click on pictures*/
 /*@returns adress of picture*/
 function heroes() {
-
-  $('body').append(`<div class="hero" style="margin-bottom: -4em">
-  <img src="images/char-boy.png" alt="picture">
-  <img src="images/char-cat-girl.png" alt="picture">
-  <img src="images/char-horn-girl.png" alt="picture">
-  <img src="images/char-pink-girl.png" alt="picture">
-  <img src="images/char-princess-girl.png" alt="picture">
-  <div>`);
 
   $('img:eq(0)').click(function() {
     player.sprite = 'images/char-boy.png';
@@ -84,27 +64,28 @@ function soundBump() {
 
 
 /*@constructor create class Enemy*/
-let Enemy = function() {
-  this.sprite = 'images/enemy-bug.png';
-  this.x = -100;
-  this.y = 100;
-};
+class Enemy {
+  constructor() {
+    this.x = -100;
+    this.y = 100;
+    this.sprite = 'images/enemy-bug.png';
+  }
 
+  /*@description update the enemy's position, required method for game*/
+  /*@param dt, a time delta between ticks*/
+  update(dt) {
+    this.x = this.x + 100 * dt;
 
-/*@description update the enemy's position, required method for game*/
-/*@param dt, a time delta between ticks*/
-Enemy.prototype.update = function(dt) {
-  this.x = this.x + 100 * dt;
-  if (this.x >= 550) {
-    this.x = -50;
-    this.y = (Math.floor(Math.random() * 7) + 2) * 30;
+    if (this.x >= 550) {
+      this.x = -50;
+      this.y = (Math.floor(Math.random() * 7) + 2) * 30;
+    };
   };
-};
 
-
-/*@description draw the enemy on the screen, required method for game*/
-Enemy.prototype.render = function() {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  /*@description draw the enemy on the screen, required method for game*/
+  render() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  };
 };
 
 
@@ -117,34 +98,31 @@ class Player extends Enemy {
     this.x = 202;
     this.y = 320;
   };
+
+  /*@description check at collision and update the player's position*/
+  update() {
+    allEnemies.forEach(function(item, i, allEnemies) {
+      const xMax = item.x + 70;
+      const xMin = item.x - 71;
+      const yMax = item.y + 75;
+      const yMin = item.y - 65;
+
+      if ((player.x <= xMax && player.x >= xMin) && (player.y <= yMax && player.y >= yMin)) {
+        setTimeout (function() {
+          soundBump();
+          player.x = 202;
+          player.y = 320;
+        }, 100);
+      };
+    });
+  };
+
+  /*@description is returning player on beginning position*/
+  begin() {
+    this.y = 320;
+    this.x = 202;
+  };
 };
-
-
-/*@description check at collision and update the player's position*/
-Player.prototype.update = function() {
-  allEnemies.forEach(function(item, i, allEnemies) {
-    const xMax = item.x + 70;
-    const xMin = item.x - 71;
-    const yMax = item.y + 75;
-    const yMin = item.y - 65;
-
-    if ((player.x <= xMax && player.x >= xMin) && (player.y <= yMax && player.y >= yMin)) {
-      setTimeout (function() {
-        soundBump();
-        player.x = 202;
-        player.y = 320;
-      }, 100);
-    };
-  });
-};
-
-
-/*@description is returning player on beginning position*/
-Player.prototype.begin = function() {
-  this.y = 320;
-  this.x = 202;
-};
-
 
 /*@description update the player's position*/
 Player.prototype.handleInput = function(code) {
