@@ -80,8 +80,8 @@ class Player extends Enemy {
     allEnemies.forEach(function(item, i, allEnemies) {
       const xMax = item.x + 70;
       const xMin = item.x - 71;
-      const yMax = item.y + 56;
-      const yMin = item.y - 60;
+      const yMax = item.y + 70;
+      const yMin = item.y - 57;
 
       if ((player.x <= xMax && player.x >= xMin) && (player.y <= yMax && player.y >= yMin)) {
         setTimeout (function() {
