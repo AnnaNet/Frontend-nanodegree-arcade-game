@@ -1,3 +1,27 @@
 body {
     text-align: center;
+    background-image: url(../images/fon.jpg);
+    background-size: cover;
+}
+
+
+/*TODO: change size and colors of header*/
+.colors {
+  font-size: 1.5em;
+  margin-top: 1em;
+}
+
+.colors SPAN:nth-child(1) {color: #b5ff0f;}
+.colors SPAN:nth-child(2) {color: #c70000;}
+.colors SPAN:nth-child(3) {color: #0e0ea2;}
+.colors SPAN:nth-child(4) {color: #1ac19d;}
+.colors SPAN:nth-child(5) {color: #128e0b;}
+
+
+.instructions {
+  color: lightgray;
+}
+
+.hero {
+  margin: -2em 0 -4em 0;
 }
