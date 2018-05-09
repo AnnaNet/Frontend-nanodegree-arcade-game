@@ -27,6 +27,21 @@ class Enemy {
     this.sprite = 'images/enemy-bug.png';
   }
 
+  /*@description set beginning position*/
+  beginPosition(p) {
+    switch(p) {
+      case 0 : this.x = -150;
+        break;
+      case 1 : this.x = 20;
+        break;
+      case 2 : this.x = -200;
+        break;
+      case 3 : this.x = -400;
+        break;
+    }
+  }
+
+
   /*@description update the enemy's position, required method for game*/
   /*@param dt, a time delta between ticks*/
   update(dt) {
@@ -61,7 +76,7 @@ class Player extends Enemy {
       const xMax = item.x + 70;
       const xMin = item.x - 71;
       const yMax = item.y + 60;
-      const yMin = item.y - 65;
+      const yMin = item.y - 60;
 
       if ((player.x <= xMax && player.x >= xMin) && (player.y <= yMax && player.y >= yMin)) {
         setTimeout (function() {
@@ -170,18 +185,7 @@ function createEnemies() {
   for (let i = 0; i <= 4; i++) {
     const enemy = new Enemy();
     enemy.y = (Math.floor(Math.random() * 6) + 1) * 20;
-
-    switch(i) {
-      case 0 : enemy.x = -150;
-        break;
-      case 1 : enemy.x = 20;
-        break;
-      case 2 : enemy.x = -200;
-        break;
-      case 3 : enemy.x = -400;
-        break;
-    }
-
+    enemy.beginPosition(i);
     allEnemies.push(enemy);
   }
 }
