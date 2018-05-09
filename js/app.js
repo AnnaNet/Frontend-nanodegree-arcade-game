@@ -1,5 +1,4 @@
-/*TODO: add variables and arrays*/
-//let wins = 0;
+/*TODO: add array for enemies*/
 let allEnemies = [];
 
 
@@ -25,6 +24,7 @@ class Enemy {
     this.x = -100;
     this.y = 100;
     this.sprite = 'images/enemy-bug.png';
+    this.velocity = (Math.floor(Math.random() * 7) + 2) * 50;
   }
 
   /*@description set beginning position*/
@@ -41,15 +41,20 @@ class Enemy {
     }
   }
 
+   /*@description set velocity*/
+   speed() {
+    this.velocity = (Math.floor(Math.random() * 5) + 3) * 40;
+  }
 
   /*@description update the enemy's position, required method for game*/
   /*@param dt, a time delta between ticks*/
   update(dt) {
-    this.x = this.x + 100 * dt;
+    this.x = this.x + this.velocity * dt;
 
     if (this.x >= 550) {
       this.x = -50;
       this.y = (Math.floor(Math.random() * 7) + 2) * 30;
+      this.speed();
     }
   }
 
@@ -75,7 +80,7 @@ class Player extends Enemy {
     allEnemies.forEach(function(item, i, allEnemies) {
       const xMax = item.x + 70;
       const xMin = item.x - 71;
-      const yMax = item.y + 60;
+      const yMax = item.y + 56;
       const yMin = item.y - 60;
 
       if ((player.x <= xMax && player.x >= xMin) && (player.y <= yMax && player.y >= yMin)) {
