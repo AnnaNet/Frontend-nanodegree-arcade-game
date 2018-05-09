@@ -9,7 +9,7 @@ It is a arcade game with bugs and Hero.
 
 ## Instructions
 
-To get started, just open web-page (https://annanet.github.io/frontend-nanodegree-arcade-game/
+To get started, just open web-page (
 or run file index.html).
 You can click at arrows on keyboard for movement your Hero. Do it, until there will Hero
 goes at water.
